@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dahl1a</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --accent:#9b63ff;
+  --btn-from:#3b0a52;
+  --btn-to:#1a0020;
+}
+html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:#0b0210;color:#fff;overflow-x:hidden;}
+.bg { position:fixed;inset:0;z-index:0;pointer-events:none;
+  background: radial-gradient(circle at 30% 30%, rgba(155,99,255,0.12), transparent 8%),
+              radial-gradient(circle at 70% 70%, rgba(20,110,255,0.08), transparent 12%),#000;}
+.nebula { position:fixed; inset:-10% -20% -10% -20%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(140,40,220,0.22), transparent 18%),
+    radial-gradient(circle at 70% 20%, rgba(30,120,255,0.12), transparent 20%),
+    radial-gradient(circle at 60% 80%, rgba(255,40,160,0.12), transparent 20%);
+  filter: blur(110px);
+  mix-blend-mode: screen;
+  animation: nebMove 45s linear infinite; }
+@keyframes nebMove { from{transform:translate(0,0)} to {transform:translate(-8%, -6%);} }
+#star-layer{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+.shoot { position:fixed; width:3px; height:90px; background:linear-gradient(180deg, #fff, rgba(255,255,255,0)); border-radius:2px; z-index:0; pointer-events:none; opacity:0.9; filter:blur(0.6px); }
+
+.page { position:relative; z-index:2; display:flex; gap:60px; max-width:1200px; margin:36px auto; padding:18px; box-sizing:border-box; }
+.left { width:360px; min-width:260px; position:sticky; top:36px; align-self:flex-start; }
+.profile-card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:18px; padding:22px; text-align:center; border:1px solid rgba(155,99,255,0.08); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.profile-img{ width:420px; max-width:100%; height:420px; max-height:420px; border-radius:18px; object-fit:cover; display:block; margin:0 auto 18px; border:6px solid rgba(155,99,255,0.14); box-shadow: 0 20px 60px rgba(155,99,255,0.12), inset 0 0 30px rgba(0,0,0,0.25); }
+.profile-name{ font-size:26px; margin:6px 0; color:var(--accent); font-weight:600; }
+.right { flex:1; min-width:300px; align-self:flex-start; }
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:20px; margin-bottom:20px; border:1px solid rgba(155,99,255,0.06); backdrop-filter: blur(6px); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+h2{ margin:6px 0 12px 0; color: #d9c8ff; }
+.meta p{ margin:6px 0; color:#e9e7ff; font-size:16px; }
+.meta .muted{ color:#bfb3ff; font-size:14px; margin-top:8px; }
+.socials { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+.btn { display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; text-decoration:none; color:#fff; font-weight:600; border:1px solid rgba(255,255,255,0.04); background: linear-gradient(135deg, var(--btn-from), var(--btn-to)); box-shadow: 0 6px 18px rgba(155,99,255,0.08); transition: transform .16s, box-shadow .16s; }
+.btn:hover{ transform:translateY(-6px); box-shadow: 0 14px 40px rgba(155,99,255,0.16); }
+.btn img.icon{ width:20px; height:20px; display:inline-block; filter: brightness(1.05); }
+.spotify-wrap iframe{ border-radius:12px; box-shadow: 0 8px 30px rgba(0,0,0,0.6); width:100%; max-width:720px; height:380px; border:0; }
+.game-area { margin-top:22px; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+.game-box { width:680px; max-width:100%; background:linear-gradient(180deg, #05030a, #0b0014); border-radius:12px; padding:14px; border:1px solid rgba(155,99,255,0.06); box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+.game-top { display:flex; justify-content:flex-end; gap:18px; margin-bottom:8px; color:#dfeaff; }
+.score { font-weight:700; color:#fff; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); }
+.game-canvas { display:block; width:100%; background:#07060a; border-radius:8px; }
+.game-controls { margin-top:10px; display:flex; gap:10px; align-items:center; justify-content:center; }
+.small-btn { padding:8px 12px; border-radius:8px; background: linear-gradient(135deg,var(--btn-from),var(--btn-to)); color:#fff; border:none; cursor:pointer; font-weight:700; }
+@media (max-width:900px){ .page{ flex-direction:column; padding:18px; } .left{ position:relative; width:100%; top:auto; } .profile-img{ width:320px; height:320px; } .right{ width:100%; padding-top:18px; } }
+@media (max-width:480px){ .profile-img{ width:240px; height:240px; } }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="nebula"></div>
+<div id="star-layer"></div>
+
+<div class="page">
+
+  <div class="left">
+    <div class="profile-card card">
+      <img src="Kyuui.png" class="profile-img" alt="Profile">
+      <div class="profile-name">Dahl1a</div>
+      <div class="muted">Art — Japanese · Grade 12</div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="card">
+      <h2>About Me</h2>
+      <div class="meta">
+        <p>• <strong>User</strong> : Dahl1a</p>
+        <p>• <strong>Age</strong> : 17 [2008]</p>
+        <p>• <strong>Cutie</strong> : Namkhing</p>
+        <div class="muted">- My Nickname is Ton, Tonmok, Tatsu, Kyuu</div>
+        <div class="muted">- Art - Japanese</div>
+        <div class="muted">- Grade 12 , Mathayom 6</div>
+
+        <div class="socials">
+          <a class="btn" href="https://open.spotify.com/playlist/6N7jSHTrSkeZw2hSQallGC" target="_blank"><img class="icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg"> Spotify</a>
+          <a class="btn" href="https://www.facebook.com/Wr1ghtia" target="_blank"><img class="icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"> Facebook</a>
+          <a class="btn" href="https://discord.com/users/826395733061271552" onclick="copyDiscordFromBtn(event)"><img class="icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"> Discord</a>
+          <a class="btn" href="https://www.instagram.com/dahl1aa.__?igsh=djY5dGY5dmJleDg4&utm_source=qr" target="_blank"><img class="icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"> Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card spotify-wrap">
+      <h2>Playlist</h2>
+      <iframe src="https://open.spotify.com/embed/playlist/6N7jSHTrSkeZw2hSQallGC" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+
+    <div class="game-area">
+      <div class="game-box card">
+        <div class="game-top">
+          <div class="score">Score: <span id="score">0</span></div>
+          <div class="score">Best: <span id="best">0</span></div>
+          <div class="score">Level: <span id="level">1</span></div>
+        </div>
+        <canvas id="dinoCanvas" width="680" height="150"></canvas>
+        <div class="game-controls">
+          <button id="startBtn" class="small-btn">Start</button>
+          <button id="restartBtn" class="small-btn" style="display:none;">Restart</button>
+          <div style="color:#cfc8ff; font-weight:600;">Press Space / Tap to Jump</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ---------------- STAR ---------------- */
+(function makeStars(){const container=document.getElementById('star-layer');for(let i=0;i<150;i++){const s=document.createElement('div');s.style.position='fixed';s.style.width=(Math.random()*2+0.5)+'px';s.style.height=s.style.width;s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.background='white';s.style.opacity=(0.2+Math.random()*0.8).toString();s.style.borderRadius='50%';s.style.transform='translateZ(0)';s.style.filter='blur('+(Math.random()*0.6)+'px)';container.appendChild(s);}})();
+/* ---------------- COPY DISCORD ---------------- */
+function copyDiscordFromBtn(e){try{navigator.clipboard.writeText('alchemyhub');alert('Discord invite copied: alchemyhub');}catch(err){}}
+/* ---------------- DINO GAME ---------------- */
+(function(){
+const canvas=document.getElementById('dinoCanvas');
+const ctx=canvas.getContext('2d');
+const width=canvas.width; const height=canvas.height; const groundY=height-30;
+const dino={x:50,y:groundY-36,w:36,h:36,vy:0,jumpPower:-12,gravity:0.6,onGround:true};
+let obstacles=[],score=0,best=localStorage.getItem('dino_best')?parseInt(localStorage.getItem('dino_best')):0,level=1,speed=4,running=false,lastTime=0;
+const scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),levelEl=document.getElementById('level');
+const startBtn=document.getElementById('startBtn'),restartBtn=document.getElementById('restartBtn');
+scoreEl.textContent=score; bestEl.textContent=best; levelEl.textContent=level;
+function resetVariables(){obstacles=[];score=0;level=1;speed=4;dino.y=groundY-dino.h;dino.vy=0;dino.onGround=true;scoreEl.textContent=score;levelEl.textContent=level;lastTime=performance.now();}
+function startGame(){if(running) return; running=true;startBtn.style.display='none';restartBtn.style.display='none';resetVariables();requestAnimationFrame(loop);}
+function restartGame(){running=true;startBtn.style.display='none';restartBtn.style.display='none';resetVariables();requestAnimationFrame(loop);}
+function jump(){if(dino.onGround){dino.vy=dino.jumpPower;dino.onGround=false;}}
+function spawnObstacle(){const h=18+Math.random()*36;obstacles.push({x:width+20,y:groundY-h,w:18+Math.random()*18,h:h});}
+function hitTest(a,b){return!(a.x+a.w<b.x||a.x>b.x+b.w||a.y+a.h<b.y||a.y>b.y+b.h);}
+function loop(time){if(!running) return;const delta=(time-lastTime)/16.666; lastTime=time; if(Math.random()<0.02*level) spawnObstacle(); dino.vy+=dino.gravity*delta; dino.y+=dino.vy*delta; if(dino.y>=groundY-dino.h){dino.y=groundY-dino.h; dino.vy=0; dino.onGround=true;} for(let i=obstacles.length-1;i>=0;i--){const ob=obstacles[i]; ob.x-=speed*delta; if(ob.x+ob.w<0){obstacles.splice(i,1);score++;scoreEl.textContent=score;}} const newLevel=Math.floor(score/10)+1;if(newLevel>level){level=newLevel;speed=4+level*0.8;levelEl.textContent=level;canvas.style.background='#fff';setTimeout(()=>canvas.style.background='#07060a',100);} ctx.clearRect(0,0,width,height); ctx.fillStyle='#0b0014'; ctx.fillRect(0,groundY,width,height-groundY); ctx.fillStyle='#9b63ff'; ctx.fillRect(dino.x,dino.y,dino.w,dino.h); ctx.fillStyle='#fff'; ctx.fillRect(dino.x+dino.w-8,dino.y+8,4,4); ctx.fillStyle='#39ff14'; obstacles.forEach(ob=>ctx.fillRect(ob.x,ob.y,ob.w,ob.h)); for(const ob of obstacles){if(hitTest(dino,ob)){running=false;restartBtn.style.display='inline-block';if(score>best){best=score;localStorage.setItem('dino_best',best);bestEl.textContent=best;}}} if(running) requestAnimationFrame(loop);}
+startBtn.addEventListener('click',startGame); restartBtn.addEventListener('click',restartGame);
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();jump();} if((e.key==='r'||e.key==='R')&&!running){restartGame();}});
+canvas.addEventListener('touchstart',e=>{e.preventDefault();jump();});
+})();
+</script>
+
+</body>
+</html>
